@@ -22,10 +22,35 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
-      
+    - name: Slack Notification on SUCCESS
+      if: success()
+      uses: tokorom/action-slack-incoming-webhook@master
+      env:
+        INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      with:
+        text: vue-appにpushされた様だぜ！
+        attachments: |
+          [
+            {
+              "color": "good",
+              "author_name": "${{ github.actor }}",
+              "author_icon": "${{ github.event.sender.avatar_url }}",
+              "fields": [
+                {
+                  "title": "Commit Message",
+                  "value": "${{ env.COMMIT_MESSAGE }}"
+                },
+                {
+                  "title": "GitHub Actions URL",
+                  "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
+                },
+                {
+                  "title": "Compare URL",
+                  "value": "${{ github.event.compare }}"
+                }
+              ]
+            }
+          ]
     - name: Discord Message Notify
       uses: appleboy/discord-action@0.0.3
       with:
