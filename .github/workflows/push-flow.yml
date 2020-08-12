@@ -22,8 +22,7 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Slack Notification on SUCCESS
-      if: success()
+    - name: Slack 通知
       uses: tokorom/action-slack-incoming-webhook@master
       env:
         INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -51,14 +50,6 @@ jobs:
               ]
             }
           ]
-    - name: Discord Message Notify
-      uses: appleboy/discord-action@0.0.3
-      with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        color: "#48f442"
-        username: "push通知する城之内"
-        args: ${{ github.ref }} に ${{ github.sha }} にコミットされた様だぜ！
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
