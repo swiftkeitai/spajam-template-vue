@@ -22,34 +22,14 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Slack 通知
-      uses: tokorom/action-slack-incoming-webhook@master
-      env:
-        INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    - name: Discord Message Notify
+      uses: appleboy/discord-action@0.0.3
       with:
-        text: vue-appにpushされた様だぜ！
-        attachments: |
-          [
-            {
-              "color": "good",
-              "author_name": "${{ github.actor }}",
-              "author_icon": "${{ github.event.sender.avatar_url }}",
-              "fields": [
-                {
-                  "title": "Commit Message",
-                  "value": "${{ env.COMMIT_MESSAGE }}"
-                },
-                {
-                  "title": "GitHub Actions URL",
-                  "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
-                },
-                {
-                  "title": "Compare URL",
-                  "value": "${{ github.event.compare }}"
-                }
-              ]
-            }
-          ]
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        color: "#48f442"
+        username: "push通知する城之内"
+        args: ${{ github.ref }} に コミットされた様だぜ！　https://github.com/swiftkeitai/spajam-template-vue/commit/${{ github.sha }} 
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
