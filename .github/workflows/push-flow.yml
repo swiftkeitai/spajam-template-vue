@@ -62,7 +62,7 @@ jobs:
       run: |
         npx netlify-cli deploy --dir=./dist > result.txt
         cat result.txt
-        echo ::set-output name=resut::$(cat result.txt | tr -d '\n')
+        echo "::set-output name=resut::${cat result.txt | grep "Website Draft URL"}"
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
@@ -83,7 +83,6 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        color: "#48f442"
         username: "netlify test"
         args: ${{ steps.netlify_deploy.outputs.result }}
 
@@ -92,6 +91,5 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        color: "#48f442"
         username: "netlify test2"
         args: ${{ steps.debug.outputs.result }}
