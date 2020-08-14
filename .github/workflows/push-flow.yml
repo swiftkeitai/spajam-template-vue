@@ -56,7 +56,20 @@ jobs:
           npm run build
 
     - name: Deploy to netlify
-      run: npx netlify-cli deploy --dir=./dist --prod
+      id: netlify_deploy
+      run: |
+      npx netlify-cli deploy --dir=./dist > result.txt
+      RESULT = $(echo result.txt)
+      echo ::set-output name=resut::${ RESULT }
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+    - name: Discord Message Notify
+      uses: appleboy/discord-action@0.0.3
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        color: "#48f442"
+        username: "netlify test"
+        args: ${{ steps.netlify_deploy.outputs.result }}
