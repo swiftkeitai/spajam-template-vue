@@ -65,7 +65,7 @@ jobs:
         HOGE=$(cat result.txt | grep "Website Draft URL")
         echo debugging
         echo $HOGE
-        echo "::set-output name=resut::$HOGE}"
+        echo "::set-output name=resut::$HOGE"
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
