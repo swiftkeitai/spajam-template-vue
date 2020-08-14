@@ -72,7 +72,7 @@ jobs:
         echo "debuging"
         cat result.txt
         echo "end"
-        echo ::set-output name=resut::$(cat result.txt | tr -d '\n')
+        echo ${{ steps.netlify_deploy.outputs.result }}
 
     - name: Discord Message Notify
       uses: appleboy/discord-action@0.0.3
