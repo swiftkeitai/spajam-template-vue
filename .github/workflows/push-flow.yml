@@ -61,8 +61,8 @@ jobs:
       id: netlify_deploy
       run: |
         npx netlify-cli deploy --dir=./dist > result.txt
-        RESULT = $(echo result.txt)
-        echo ::set-output name=resut::${ RESULT }
+        echo result.txt
+        echo ::set-output name=resut::$(echo result.txt)
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
