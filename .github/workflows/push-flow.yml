@@ -68,11 +68,15 @@ jobs:
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
     - name: debug
+      id: debug
       run: |
         echo "debuging"
         cat result.txt
         echo "end"
         echo ${{ steps.netlify_deploy.outputs.result }}
+        echo "grepped"
+        cat result.txt | grep "Website Draft URL"
+        echo ::set-output name=resut::$(cat result.txt | grep "Website Draft URL")
 
     - name: Discord Message Notify
       uses: appleboy/discord-action@0.0.3
@@ -82,3 +86,12 @@ jobs:
         color: "#48f442"
         username: "netlify test"
         args: ${{ steps.netlify_deploy.outputs.result }}
+
+    - name: Discord Message Notify
+      uses: appleboy/discord-action@0.0.3
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        color: "#48f442"
+        username: "netlify test2"
+        args: ${{ steps.debug.outputs.result }}
