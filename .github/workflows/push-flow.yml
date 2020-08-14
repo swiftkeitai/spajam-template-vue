@@ -67,6 +67,13 @@ jobs:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
+    - name: debug
+      run: |
+        echo "debuging"
+        cat result.txt
+        echo "end"
+        echo ::set-output name=resut::$(cat result.txt | tr -d '\n')
+
     - name: Discord Message Notify
       uses: appleboy/discord-action@0.0.3
       with:
