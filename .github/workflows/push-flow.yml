@@ -65,7 +65,7 @@ jobs:
         HOGE=$(cat result.txt | grep "Website Draft URL")
         echo debugging
         echo $HOGE
-        echo "::set-output name=resut::$HOGE"
+        echo "::set-output name=result::$HOGE"
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
@@ -79,7 +79,7 @@ jobs:
         echo ${{ steps.netlify_deploy.outputs.result }}
         echo "grepped"
         cat result.txt | grep "Website Draft URL"
-        echo "::set-output name=resut::$(cat result.txt | grep "Website Draft URL")"
+        echo "::set-output name=result::$(cat result.txt | grep "Website Draft URL")"
 
     - name: Discord Message Notify
       uses: appleboy/discord-action@0.0.3
