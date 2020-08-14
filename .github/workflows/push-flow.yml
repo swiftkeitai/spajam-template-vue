@@ -24,14 +24,11 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: Discord Message Notify
-      uses: appleboy/discord-action@0.0.3
-      with:
-        webhook_id: ${{ secrets.WEBHOOK_ID }}
-        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        color: "#48f442"
-        username: "push通知する城之内"
-        args: ${{ github.ref }} に コミットされた様だぜ！　https://github.com/swiftkeitai/spajam-template-vue/commit/${{ github.sha }} 
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
@@ -96,3 +93,12 @@ jobs:
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
         username: "netlify test2"
         args: ${{ steps.debug.outputs.result }}
+
+    - name: Discord Message Notify
+      uses: appleboy/discord-action@0.0.3
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        color: "#48f442"
+        username: "push通知する城之内"
+        args: "${{ steps.extract_branch.outputs.branch }} に コミットされた様だぜ！　\n https://github.com/swiftkeitai/spajam-template-vue/commit/${{ github.sha }} \n ${{ steps.debug.outputs.result }}"
