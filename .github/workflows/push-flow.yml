@@ -62,7 +62,9 @@ jobs:
       run: |
         npx netlify-cli deploy --dir=./dist > result.txt
         cat result.txt
-        HOGE = cat result.txt | grep "Website Draft URL"
+        HOGE = $(cat result.txt | grep "Website Draft URL")
+        echo debugging
+        echo HOGE
         echo "::set-output name=resut::${HOGE}"
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
