@@ -1,13 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy to Netlify
+name: Deploy to Netlify (for debug)
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
+  pull_request:
     branches:
       - master
+      - develop
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,7 +26,6 @@ jobs:
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
-
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
@@ -56,8 +56,7 @@ jobs:
       run: |
         npx netlify-cli deploy --dir=./dist > result.txt
         cat result.txt
-        HOGE=$(cat result.txt | grep "URL")
-        echo debugging
+        HOGE=$(cat result.txt | grep "Website Draft URL")
         echo $HOGE
         echo "::set-output name=result::$HOGE"
       env:
@@ -70,5 +69,16 @@ jobs:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
         color: "#48f442"
-        username: "push通知する城之内(production)"
-        args: "${{ steps.extract_branch.outputs.branch }} に コミットされた様だぜ！　\n https://github.com/swiftkeitai/spajam-template-vue/commit/${{ github.sha }} \n ${{ steps.debug.outputs.result }}"
+        username: "push通知する城之内"
+        args: "${{ steps.extract_branch.outputs.branch }} に コミットされた様だぜ！　\n https://github.com/swiftkeitai/spajam-template-vue/commit/${{ github.sha }} \n ${{ steps.netlify_deploy.outputs.result }}"
+
+    - name: send PR
+      uses: actions/github-script@0.8.0
+      with:
+        script: |
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '${{ steps.netlify_deploy.outputs.result }}'
+          })
