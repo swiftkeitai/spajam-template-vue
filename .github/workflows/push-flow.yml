@@ -76,7 +76,7 @@ jobs:
         echo ${{ steps.netlify_deploy.outputs.result }}
         echo "grepped"
         cat result.txt | grep "Website Draft URL"
-        echo ::set-output name=resut::$(cat result.txt | grep "Website Draft URL")
+        echo "::set-output name=resut::$(cat result.txt | grep "Website Draft URL")"
 
     - name: Discord Message Notify
       uses: appleboy/discord-action@0.0.3
