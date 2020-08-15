@@ -1,7 +1,11 @@
-export enum State { All, Working, Done }
+export enum State {
+  All,
+  Working,
+  Done
+}
 
 export interface TodoItem {
-  id: number
-  comment: string
-  state: State.Working | State.Done
+  id: number;
+  comment: string;
+  state: State.Working | State.Done;
 }
