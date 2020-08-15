@@ -73,7 +73,7 @@ export default class TodoList extends Vue {
       this.current === State.All ? true : this.current === t.state)
    }
 
-  // コンポーネントのインスタンスが作成された時にストレージからTODO全件取得
+  // コンポーネントのインスタンスが作成された時にストレージからTODO全件取得，これないとリロード時にclearされる
   private created() {
     this.todos = todoStorage.fetchAll()
   }
