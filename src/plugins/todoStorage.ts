@@ -1,11 +1,11 @@
-import { TodoItem } from "@/constants/todoItem";
+import { TodoItem } from '@/constants/todoItem';
 
 interface Storable {
   getItem(key: string): string | null;
   setItem(key: string, value: string): void;
 }
 
-const STORAGE_KEY = "vue-ts-todo";
+const STORAGE_KEY = 'vue-ts-todo';
 
 export default class TodoStorage {
   get nextId(): number {
@@ -16,7 +16,7 @@ export default class TodoStorage {
 
   public fetchAll(): TodoItem[] {
     const todos = JSON.parse(
-      this.storage.getItem(STORAGE_KEY) || "[]"
+      this.storage.getItem(STORAGE_KEY) || '[]'
     ) as TodoItem[];
     todos.forEach((todo, index) => (todo.id = index));
     return todos;
