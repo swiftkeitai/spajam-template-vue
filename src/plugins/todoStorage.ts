@@ -1,4 +1,4 @@
-import { TodoItem } from '@/constants/todoItem';
+import { TodoItem } from '@/types/todoItem';
 
 interface Storable {
   getItem(key: string): string | null;
