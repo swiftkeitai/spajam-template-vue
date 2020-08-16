@@ -58,7 +58,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import TodoStorage from '@/plugins/todoStorage';
-import { State, TodoItem } from '@/constants/todoItem';
+import { State, TodoItem } from '@/types/todoItem';
 
 const todoStorage = new TodoStorage();
 
