@@ -5,17 +5,23 @@
     </v-avatar>
     <v-toolbar-title>TodoList</v-toolbar-title>
     <v-spacer></v-spacer>
-    <Signup />
+    <SignupLabel />
+    <SignupButton />
     <v-btn icon>
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
 
-<script lang="ts">
-import Signup from "@/components/Signup.vue";
-
-export default {
-  components: { Signup }
-};
+<script>
+import { Component, Vue } from "vue-property-decorator";
+import SignupLabel from "@/components/SigninLabel.vue";
+import SignupButton from "@/components/SignupButton.vue";
+@Component({
+  components: {
+    SignupLabel,
+    SignupButton
+  }
+})
+export default class AppBar extends Vue {}
 </script>
