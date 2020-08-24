@@ -1,10 +1,6 @@
 <template>
-  <div v-if="userStatus">
-    <p>{{ user.displayName }}</p>
-  </div>
-  <div v-else>
-    <p>ログインしていません</p>
-  </div>
+  <p v-if="userStatus" class="mb-0 mr-3">{{ user.displayName }}</p>
+  <p v-else class="mb-0 mr-3">ログインしていません</p>
 </template>
 
 <script>
