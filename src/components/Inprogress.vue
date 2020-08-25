@@ -1,7 +1,4 @@
 <template>
-  <!-- <div>
-    {{ tasks }}
-  </div> -->
   <v-card class="d-flex flex-column" color="green lighten-5" tile>
     <v-card-title>InProgress</v-card-title>
     <v-card
@@ -32,6 +29,7 @@ export default {
       firebase
         .firestore()
         .collection("tasks")
+        .where("status", "==", "inprogress")
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
