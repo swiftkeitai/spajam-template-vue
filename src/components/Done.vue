@@ -1,6 +1,10 @@
 <template>
   <v-card class="d-flex flex-column" color="green lighten-5" tile>
-    <v-card-title>Done</v-card-title>
+    <v-card-title>
+      Done
+      <v-spacer></v-spacer>
+      <AddCardButton />
+    </v-card-title>
     <v-card
       v-for="task in tasks"
       :key="task"
@@ -15,14 +19,17 @@
 </template>
 
 <script>
+import { Component, Vue } from "vue-property-decorator";
+import AddCardButton from "@/components/AddCardButton";
 import firebase from "@/plugins/firebaseInit";
 
-export default {
-  data() {
-    return {
-      tasks: []
-    };
+@Component({
+  components: {
+    AddCardButton
   },
+  data: () => ({
+    tasks: []
+  }),
   created() {
     // fetch data from firestore
     {
@@ -38,5 +45,6 @@ export default {
         });
     }
   }
-};
+})
+export default class Done extends Vue {}
 </script>

@@ -3,7 +3,7 @@
     <v-row class="ma-3">
       <v-col cols="3"><Goal /></v-col>
       <v-col cols="3"><Todo /></v-col>
-      <v-col cols="3"><Inprogress /></v-col>
+      <v-col cols="3"><InProgress /></v-col>
       <v-col cols="3"><Done /></v-col>
     </v-row>
   </v-content>
@@ -13,14 +13,14 @@
 import { Component, Vue } from "vue-property-decorator";
 import Goal from "@/components/Goal.vue";
 import Todo from "@/components/Todo.vue";
-import Inprogress from "@/components/Inprogress.vue";
+import InProgress from "@/components/InProgress.vue";
 import Done from "@/components/Done.vue";
 
 @Component({
   components: {
     Goal,
     Todo,
-    Inprogress,
+    InProgress,
     Done
   }
 })
