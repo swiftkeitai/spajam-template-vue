@@ -15,13 +15,13 @@
       <v-container>
         <v-container class="py-0">
           <v-row>
-            <v-card-title class="py-0"> {{ task.title }} </v-card-title>
+            <v-card-title class="py-0"> {{ task.data.title }} </v-card-title>
             <v-spacer></v-spacer>
             <DeleteCardButton :task="task" />
           </v-row>
         </v-container>
         <v-card-subtitle class="py-0">
-          {{ task.subtitle }}
+          {{ task.data.subtitle }}
         </v-card-subtitle>
       </v-container>
     </v-card>
@@ -52,7 +52,7 @@ import firebase from "@/plugins/firebaseInit";
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            this.tasks.push(doc.data());
+            this.tasks.push({ data: doc.data(), id: doc.id });
           });
         });
     }

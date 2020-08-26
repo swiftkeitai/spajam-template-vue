@@ -7,9 +7,9 @@
     </template>
     <v-card>
       <v-card-title>Really delete task?</v-card-title>
-      <v-card-text> Title: {{ task.title }} </v-card-text>
-      <v-card-text> SubTitle: {{ task.subtitle }} </v-card-text>
-      <v-card-text> Status: {{ task.status }} </v-card-text>
+      <v-card-text> Title: {{ task.data.title }} </v-card-text>
+      <v-card-text> SubTitle: {{ task.data.subtitle }} </v-card-text>
+      <v-card-text> Status: {{ task.data.status }} </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="dialog = false">Cancel</v-btn>
@@ -39,12 +39,7 @@ export default {
         .firestore()
         .collection("tasks")
         .doc(id)
-        .delete()
-        .then(() => {
-          this.tasks = this.tasks.filter(task => {
-            return task.id != id;
-          });
-        });
+        .delete();
     }
   }
 };

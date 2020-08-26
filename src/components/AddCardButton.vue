@@ -58,7 +58,6 @@ import firebase from "@/plugins/firebaseInit";
 export default {
   data: () => ({
     dialog: false,
-    id: null,
     title: null,
     subtitle: null,
     status: null
