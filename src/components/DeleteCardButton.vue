@@ -29,8 +29,7 @@ export default {
     dialog: false,
     title: null,
     subtitle: null,
-    status: null,
-    tasks: []
+    status: null
   }),
   props: ["task"],
   methods: {
