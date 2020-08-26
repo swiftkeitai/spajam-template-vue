@@ -45,8 +45,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-        <v-btn color="blue darken-1" text @click="addTask()">Save</v-btn>
+        <v-btn color="blue darken-1" text @click="dialog = false">Cancel</v-btn>
+        <v-btn color="green darken-1" text @click="addTask()">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -58,6 +58,7 @@ import firebase from "@/plugins/firebaseInit";
 export default {
   data: () => ({
     dialog: false,
+    id: null,
     title: null,
     subtitle: null,
     status: null
