@@ -49,11 +49,16 @@ import firebase from "@/plugins/firebaseInit";
         .firestore()
         .collection("tasks")
         .where("status", "==", "todo")
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            this.tasks.push({ data: doc.data(), id: doc.id });
-          });
+        .onSnapshot(snapshot => {
+          for (const change of snapshot.docChanges()) {
+            if (change.type === "added") {
+              this.tasks.push({ data: change.doc.data(), id: change.doc.id });
+            } else if (change.type === "removed") {
+              this.tasks = this.tasks.filter(task => {
+                return task.id !== change.doc.id;
+              });
+            }
+          }
         });
     }
   }

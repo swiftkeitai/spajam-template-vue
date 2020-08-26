@@ -12,8 +12,18 @@
       width="90%"
       tile
     >
-      <v-card-title> {{ task.title }} </v-card-title>
-      <v-card-subtitle> {{ task.subtitle }} </v-card-subtitle>
+      <v-container>
+        <v-container class="py-0">
+          <v-row>
+            <v-card-title class="py-0"> {{ task.data.title }} </v-card-title>
+            <v-spacer></v-spacer>
+            <DeleteCardButton :task="task" />
+          </v-row>
+        </v-container>
+        <v-card-subtitle class="py-0">
+          {{ task.data.subtitle }}
+        </v-card-subtitle>
+      </v-container>
     </v-card>
   </v-card>
 </template>
@@ -21,11 +31,13 @@
 <script>
 import { Component, Vue } from "vue-property-decorator";
 import AddCardButton from "@/components/AddCardButton";
+import DeleteCardButton from "@/components/DeleteCardButton";
 import firebase from "@/plugins/firebaseInit";
 
 @Component({
   components: {
-    AddCardButton
+    AddCardButton,
+    DeleteCardButton
   },
   data: () => ({
     tasks: []
@@ -37,11 +49,16 @@ import firebase from "@/plugins/firebaseInit";
         .firestore()
         .collection("tasks")
         .where("status", "==", "done")
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            this.tasks.push(doc.data());
-          });
+        .onSnapshot(snapshot => {
+          for (const change of snapshot.docChanges()) {
+            if (change.type === "added") {
+              this.tasks.push({ data: change.doc.data(), id: change.doc.id });
+            } else if (change.type === "removed") {
+              this.tasks = this.tasks.filter(task => {
+                return task.id !== change.doc.id;
+              });
+            }
+          }
         });
     }
   }
